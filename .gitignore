@@ -1,0 +1,5 @@
+# The 2026 site is its own git repository — keep it out of this repo/deploy.
+acisp2026/
+
+# macOS noise
+.DS_Store
