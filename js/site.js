@@ -240,7 +240,7 @@
       '<div class="sidebar__partners">' +
         "<h4>Proceedings</h4>" +
         '<a href="https://www.springer.com/gp/computer-science/lncs" target="_blank" rel="noopener">' +
-          '<img src="img/logo-springer.png" alt="Springer — Lecture Notes in Computer Science"></a>' +
+          '<img src="img/logo-springer.svg" alt="Springer — Lecture Notes in Computer Science"></a>' +
         "<h4>Hosted by</h4>" +
         '<a href="https://www.monash.edu/" target="_blank" rel="noopener">' +
           '<img src="img/monash-logo.svg" alt="Monash University"></a>' +
