@@ -1,7 +1,6 @@
-label,date,struck,highlight,note
-Paper submission (Round 1),30 Nov 2026,,yes,AoE
-Author notification (Round 1),15 Jan 2027,,,
-Paper submission (Round 2),1 March 2027,,,AoE
-Author notification (Round 2),16 April 2027,,,
-Camera Ready,30 April 2027,,,
-Conference,To be announced,,,"Melbourne, Australia"
+group,label,date,note
+Round 1 Deadline,Paper submission,30 Nov 2026,(AoE)
+Round 1 Deadline,Author notification,15 Jan 2027,
+Round 2 Deadline,Paper submission,1 March 2027,(AoE)
+Round 2 Deadline,Author notification,16 April 2027,
+,Camera Ready,30 April 2027,

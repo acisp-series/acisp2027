@@ -5,3 +5,5 @@ acisp2026/
 .DS_Store
 
 Call for papers 2027.docx
+# Source CFP documents (content lives in cfp.html + data/)
+cfp.md

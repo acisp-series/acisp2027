@@ -376,18 +376,29 @@
   RENDER.dates = function (el) {
     return loadCSV("dates.csv").then(function (rows) {
       if (!rows.length) { el.innerHTML = '<p class="empty-note">Important dates will be announced.</p>'; return; }
-      var body = rows.map(function (r) {
-        var struck = /^(y|yes|true|1)$/i.test(r.struck || "");
-        var hl = /^(y|yes|true|1)$/i.test(r.highlight || "");
-        var dateCell = isTBA(r.date) ? tbaChip("To be announced")
-          : (struck ? "<s>" + esc(r.date) + "</s>" : esc(r.date));
-        var label = esc(r.label) + (isBlank(r.note) ? "" : ' <span class="muted">(' + esc(r.note) + ")</span>");
-        return '<tr class="' + (struck ? "struck " : "") + (hl ? "row-highlight" : "") + '">' +
-          "<td>" + label + "</td><td>" + dateCell + "</td></tr>";
-      }).join("");
-      el.innerHTML =
-        '<div class="table-wrap"><table class="data dates">' +
-        "<thead><tr><th>Milestone</th><th>Date</th></tr></thead><tbody>" + body + "</tbody></table></div>";
+      // Rendered in the same shape as the Call for Papers document:
+      // a bold "<group>:" heading followed by its "<label>: <date>" lines,
+      // and ungrouped rows as standalone bold lines.
+      var order = [], groups = {};
+      rows.forEach(function (r) {
+        var g = r.group || "";
+        if (!(g in groups)) { groups[g] = []; order.push(g); }
+        groups[g].push(r);
+      });
+      function line(r) {
+        var date = isTBA(r.date) ? tbaChip("To be announced") : esc(r.date);
+        return esc(r.label) + ": " + date + (isBlank(r.note) ? "" : " " + esc(r.note));
+      }
+      el.innerHTML = '<div class="deadlines">' + order.map(function (g) {
+        if (g === "") {
+          return groups[g].map(function (r) {
+            return '<p class="deadline-single"><strong>' + line(r) + "</strong></p>";
+          }).join("");
+        }
+        var head = /:$/.test(g) ? g : g + ":";
+        return '<div class="deadline-group"><p><strong>' + esc(head) + "</strong><br>" +
+          groups[g].map(line).join("<br>") + "</p></div>";
+      }).join("") + "</div>";
     }).catch(function () { fail(el, "dates.csv"); });
   };
 
