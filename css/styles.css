@@ -246,10 +246,11 @@ table.data tr.subhead td, table.data tr.subhead th { background: var(--navy); co
 /* Publisher logos, as they appear in the Call for Papers document.
    Equal-size neutral frames keep the solid-colour LNCS block from
    visually outweighing the line-art Springer wordmark. */
-.pub-logos { display: flex; flex-wrap: wrap; gap: 14px; margin: 1.6rem 0; }
-.pub-logos a { display: flex; align-items: center; justify-content: center; width: 168px; height: 76px; padding: 12px 16px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); }
+.pub-logos { display: flex; flex-wrap: wrap; gap: 16px; margin: 1.6rem 0; }
+.pub-logos a { flex: 1 1 0; min-width: 220px; display: flex; align-items: center; justify-content: center; height: 104px; padding: 16px 22px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); }
 .pub-logos a:hover { border-color: var(--line-2); }
-.pub-logos img { max-height: 42px; max-width: 100%; width: auto; object-fit: contain; }
+/* Capped at the artwork's native height so neither logo is upscaled. */
+.pub-logos img { max-height: 64px; max-width: 100%; width: auto; object-fit: contain; }
 
 /* Topics of interest — two columns, readable with long phrases */
 .topic-list { list-style: none; margin: 0 0 1rem; padding: 0; }
