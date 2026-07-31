@@ -147,6 +147,7 @@ main .prose { max-width: var(--readw); }
 .prose ul, .prose ol { margin: 0 0 1rem; padding-left: 1.3rem; }
 .prose li { margin: .3rem 0; }
 .prose a { text-decoration: underline; text-underline-offset: 2px; }
+.prose a.btn, .prose a.btn:hover { text-decoration: none; }
 .lead { font-size: 1.08rem; color: var(--ink); }
 .group-title { font-size: 1.2rem; color: var(--navy); margin: 1.6rem 0 .7rem; }
 .group-title:first-child { margin-top: .1rem; }
@@ -234,6 +235,12 @@ table.data tr.subhead td, table.data tr.subhead th { background: var(--navy); co
 
 .chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
 .chip { background: #fff; border: 1px solid var(--line-2); color: var(--navy); border-radius: 999px; padding: 6px 14px; font-size: .9rem; font-weight: 500; }
+
+/* Topics of interest — two columns, readable with long phrases */
+.topic-list { list-style: none; margin: 0 0 1rem; padding: 0; columns: 2; column-gap: 32px; }
+.topic-list li { break-inside: avoid; position: relative; padding: 5px 0 5px 18px; font-size: .95rem; }
+.topic-list li::before { content: ""; position: absolute; left: 2px; top: 13px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+@media (max-width: 700px) { .topic-list { columns: 1; } }
 
 .news { list-style: none; margin: 0; padding: 0; }
 .news li { padding: 11px 0; border-bottom: 1px solid var(--line); display: flex; gap: 14px; }

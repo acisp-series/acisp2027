@@ -362,6 +362,12 @@
         el.textContent = val;
       }
     });
+    // Links whose href comes from config.csv (e.g. the submission server).
+    document.querySelectorAll("[data-config-href]").forEach(function (el) {
+      var url = cfg(el.getAttribute("data-config-href"), "");
+      if (isBlank(url)) return; // keep the page's own fallback href
+      el.setAttribute("href", url);
+    });
   }
 
   /* ---------------- renderers ---------------- */
@@ -532,8 +538,8 @@
   RENDER.topics = function (el) {
     return loadCSV("topics.csv").then(function (rows) {
       if (!rows.length) { el.innerHTML = '<p class="empty-note">Topics of interest will be announced.</p>'; return; }
-      el.innerHTML = '<ul class="chips">' + rows.map(function (r) {
-        return '<li class="chip">' + esc(r.topic) + "</li>";
+      el.innerHTML = '<ul class="topic-list">' + rows.map(function (r) {
+        return "<li>" + esc(r.topic) + "</li>";
       }).join("") + "</ul>";
     }).catch(function () { fail(el, "topics.csv"); });
   };
