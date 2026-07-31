@@ -247,11 +247,11 @@ table.data tr.subhead td, table.data tr.subhead th { background: var(--navy); co
    Equal-size neutral frames keep the solid-colour LNCS block from
    visually outweighing the line-art Springer wordmark. */
 .pub-logos { display: flex; flex-wrap: wrap; gap: 16px; margin: 1.6rem 0; }
-.pub-logos a { flex: 1 1 0; min-width: 220px; display: flex; align-items: center; justify-content: center; height: 88px; padding: 10px 20px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); }
+.pub-logos a { flex: 1 1 0; min-width: 220px; display: flex; align-items: center; justify-content: center; height: 116px; padding: 14px 22px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); }
 .pub-logos a:hover { border-color: var(--line-2); }
-/* 68px is the largest height at which lncs.png (136px tall) still renders
-   crisply on a 2x display; the Springer mark is vector, so it always is. */
-.pub-logos img { max-height: 68px; max-width: 100%; width: auto; object-fit: contain; }
+/* Both marks stay sharp at 2x here: Springer is vector, and lncs.jpg is
+   296px tall (so retina-crisp up to a 148px display height). */
+.pub-logos img { max-height: 88px; max-width: 100%; width: auto; object-fit: contain; }
 
 /* Topics of interest — two columns, readable with long phrases */
 .topic-list { list-style: none; margin: 0 0 1rem; padding: 0; }
