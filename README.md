@@ -175,5 +175,11 @@ work with no extra configuration.
 - `img/monash-logo.svg` — official Monash University logo (host institution).
   Consider replacing with the asset supplied by Monash brand/marketing once
   available, per their brand guidelines.
-- `img/logo-springer.png`, `img/lncs.png` — publisher logos carried over from
-  the ACISP 2026 site, used to identify the proceedings publisher.
+- `img/logo-springer.svg` — Springer publisher logo (vector, so it stays sharp
+  at any size), from the English Wikipedia article on Springer.
+- `img/lncs.png` — Lecture Notes in Computer Science logo carried over from the
+  ACISP 2026 site. It is 369x136, which is exactly retina-sharp at the 68px
+  display height set in `.pub-logos`; enlarging it further will look soft
+  unless a higher-resolution original is obtained from Springer.
+
+Both identify the proceedings publisher, as they do in the CFP document.
