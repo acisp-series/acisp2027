@@ -15,7 +15,7 @@
   var NAV = [
     ["index.html", "Home"],
     ["cfp.html", "Call for Papers"],
-    ["committee.html", "Committee"],
+    ["committee.html", "Organising Committee"],
     ["pc.html", "Program Committee"],
     ["registration.html", "Registration"],
     ["accepted.html", "Accepted Papers"],
@@ -363,9 +363,13 @@
       }
     });
     // Links whose href comes from config.csv (e.g. the submission server).
+    // An email value becomes a mailto: link.
     document.querySelectorAll("[data-config-href]").forEach(function (el) {
       var url = cfg(el.getAttribute("data-config-href"), "");
-      if (isBlank(url)) return; // keep the page's own fallback href
+      if (isBlank(url) || isTBA(url)) return; // keep the page's own fallback href
+      if (url.indexOf("@") > 0 && url.indexOf("://") === -1 && url.indexOf("mailto:") !== 0) {
+        url = "mailto:" + url;
+      }
       el.setAttribute("href", url);
     });
   }
