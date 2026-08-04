@@ -415,15 +415,16 @@
         if (!groups[g]) { groups[g] = []; order.push(g); }
         groups[g].push(r);
       });
-      el.innerHTML = order.map(function (g) {
+      el.innerHTML = '<div class="committee">' + order.map(function (g) {
         var people = groups[g].map(function (r) {
           var name = isTBA(r.name) ? tbaChip("To be announced") : linkify(r.name, r.url, "person__link");
           var aff = isBlank(r.affiliation) ? "" :
             '<span class="person__aff">' + linkify(r.affiliation, r.aff_url) + "</span>";
-          return '<div class="person"><span class="person__name">' + name + "</span> " + aff + "</div>";
+          return "<li><span class=\"person__name\">" + name + "</span>" + aff + "</li>";
         }).join("");
-        return '<div class="committee-group"><h2>' + esc(g) + '</h2><div class="people">' + people + "</div></div>";
-      }).join("");
+        return '<div class="committee-row"><h2 class="committee-role">' + esc(g) + "</h2>" +
+          '<ul class="committee-people">' + people + "</ul></div>";
+      }).join("") + "</div>";
     }).catch(function () { fail(el, "committee.csv"); });
   };
 

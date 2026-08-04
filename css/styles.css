@@ -197,12 +197,21 @@ table.data tbody tr:last-child td { border-bottom: 0; }
 table.data tr.subhead td, table.data tr.subhead th { background: var(--navy); color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; font-size: .78rem; text-align: left; }
 
 /* ---------- Committee ---------- */
-.committee-group { margin-bottom: 24px; }
-.committee-group h2 { font-size: 1.05rem; color: var(--navy); padding-bottom: 7px; border-bottom: 2px solid var(--accent); display: inline-block; margin: 0 0 12px; }
-.people { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2px 24px; }
-.person { padding: 7px 0; border-bottom: 1px solid var(--line); }
+/* Role on the left, its members on the right — stays compact with the one
+   or two people per role that an organising committee actually has. */
+.committee { max-width: 720px; border-top: 1px solid var(--line); }
+.committee-row { display: grid; grid-template-columns: 190px 1fr; gap: 8px 24px; padding: 14px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+.committee-role { font-size: .95rem; color: var(--navy); margin: 0; font-weight: 700; }
+.committee-people { list-style: none; margin: 0; padding: 0; }
+.committee-people li { padding: 2px 0; }
+.committee-people li + li { margin-top: 2px; }
 .person__name { font-weight: 600; color: var(--ink); }
 .person__aff { color: var(--muted); font-size: .9rem; }
+.person__aff::before { content: " · "; color: var(--line-2); }
+@media (max-width: 620px) {
+  .committee-row { grid-template-columns: 1fr; gap: 4px; }
+  .committee-role { color: var(--accent); font-size: .82rem; letter-spacing: .06em; text-transform: uppercase; }
+}
 .pc-list { columns: 2; column-gap: 36px; }
 .pc-list .person { break-inside: avoid; }
 
