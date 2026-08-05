@@ -247,7 +247,25 @@ table.data tr.subhead td, table.data tr.subhead th { background: var(--navy); co
 
 .tba { display: inline-flex; align-items: center; gap: 6px; font-size: .84rem; font-weight: 600; color: var(--muted); background: var(--bg-soft); border: 1px dashed var(--line-2); padding: 2px 9px; border-radius: 999px; }
 .tba::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--faint); }
-.empty-note { color: var(--muted); font-style: italic; padding: 14px 0; }
+/* Empty states carry a page on their own until the data arrives, so give
+   them enough presence not to read as a rendering failure. */
+.empty-note {
+  color: var(--muted); font-style: normal; margin: 0;
+  position: relative;                 /* not flex: links must stay inline */
+  max-width: var(--readw); padding: 20px 24px 20px 56px;
+  background: var(--bg-soft); border: 1px dashed var(--line-2);
+  border-radius: var(--radius);
+}
+.empty-note::before {
+  content: ""; position: absolute; left: 22px; top: 21px;
+  width: 18px; height: 18px;
+  border-radius: 50%; border: 2px solid var(--line-2);
+  background:
+    linear-gradient(var(--muted), var(--muted)) center 3px / 2px 6px no-repeat,
+    linear-gradient(var(--muted), var(--muted)) center 11px / 2px 2px no-repeat;
+}
+.empty-note a { color: var(--accent); }
+.empty-note code { font-style: normal; }
 
 .chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
 .chip { background: #fff; border: 1px solid var(--line-2); color: var(--navy); border-radius: 999px; padding: 6px 14px; font-size: .9rem; font-weight: 500; }
