@@ -261,7 +261,10 @@
       var srcAttr = i === 0
         ? 'src="' + esc(b.src) + '" fetchpriority="high"'
         : 'data-src="' + esc(b.src) + '"';
-      return '<div class="site-banner__slide' + (i === 0 ? " is-active" : "") + '">' +
+      // Inactive slides are only hidden with opacity, so they must also be
+      // taken out of the tab order and the accessibility tree.
+      return '<div class="site-banner__slide' + (i === 0 ? " is-active" : "") + '"' +
+        (i === 0 ? "" : ' aria-hidden="true" inert') + ">" +
         "<img " + srcAttr + ' alt="' + esc(b.alt) + '">' +
         '<span class="site-banner__credit">' + b.credit + "</span>" +
         "</div>";
@@ -269,8 +272,12 @@
     var dotsHtml = BANNERS.length > 1
       ? '<div class="site-banner__dots">' + BANNERS.map(function (b, i) {
           return '<button class="site-banner__dot' + (i === 0 ? " is-active" : "") +
-            '" type="button" aria-label="Show slide ' + (i + 1) + '"></button>';
-        }).join("") + "</div>"
+            '" type="button" aria-label="Show slide ' + (i + 1) + '" aria-pressed="' +
+            (i === 0 ? "true" : "false") + '"></button>';
+        }).join("") +
+        '<button class="site-banner__pause" type="button" aria-pressed="false" ' +
+        'aria-label="Pause the banner slideshow" title="Pause the banner slideshow"></button>' +
+        "</div>"
       : "";
     var bwrap = document.createElement("div");
     bwrap.className = "site-banner-wrap";
@@ -312,8 +319,9 @@
   function initBanner(root) {
     var slides = root.querySelectorAll(".site-banner__slide");
     var dots = root.querySelectorAll(".site-banner__dot");
+    var pauseBtn = root.querySelector(".site-banner__pause");
     if (slides.length < 2) return;
-    var idx = 0, timer = null;
+    var idx = 0, timer = null, paused = false;
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     function hydrate(slide) {
@@ -321,23 +329,41 @@
       if (img) { img.src = img.getAttribute("data-src"); img.removeAttribute("data-src"); }
     }
     function show(n) {
-      slides[idx].classList.remove("is-active");
-      if (dots[idx]) dots[idx].classList.remove("is-active");
+      var prev = slides[idx];
+      prev.classList.remove("is-active");
+      prev.setAttribute("aria-hidden", "true");
+      prev.setAttribute("inert", "");
+      if (dots[idx]) { dots[idx].classList.remove("is-active"); dots[idx].setAttribute("aria-pressed", "false"); }
       idx = (n + slides.length) % slides.length;
-      hydrate(slides[idx]);
-      slides[idx].classList.add("is-active");
-      if (dots[idx]) dots[idx].classList.add("is-active");
+      var cur = slides[idx];
+      hydrate(cur);
+      cur.classList.add("is-active");
+      cur.removeAttribute("aria-hidden");
+      cur.removeAttribute("inert");
+      if (dots[idx]) { dots[idx].classList.add("is-active"); dots[idx].setAttribute("aria-pressed", "true"); }
     }
     function start() {
-      if (!reduce && !timer) timer = setInterval(function () { show(idx + 1); }, SLIDE_MS);
+      if (!reduce && !paused && !timer) timer = setInterval(function () { show(idx + 1); }, SLIDE_MS);
+    }
+    function stop() {
+      if (timer) { clearInterval(timer); timer = null; }
     }
     dots.forEach(function (d, i) {
-      d.addEventListener("click", function () {
-        if (timer) { clearInterval(timer); timer = null; }
-        show(i);
-        start();
-      });
+      d.addEventListener("click", function () { stop(); show(i); start(); });
     });
+    // WCAG 2.2.2: anything that moves automatically for more than five
+    // seconds needs a way to stop it.
+    if (pauseBtn) {
+      pauseBtn.addEventListener("click", function () {
+        paused = !paused;
+        pauseBtn.setAttribute("aria-pressed", paused ? "true" : "false");
+        pauseBtn.setAttribute("aria-label", paused ? "Play the banner slideshow" : "Pause the banner slideshow");
+        pauseBtn.title = pauseBtn.getAttribute("aria-label");
+        var box = root.querySelector(".site-banner") || root;
+        box.classList.toggle("is-paused", paused);
+        if (paused) stop(); else start();
+      });
+    }
     // Load the remaining slides once the page itself has finished loading,
     // then begin rotating (no auto-rotation for reduced-motion users).
     function ready() {
@@ -500,7 +526,7 @@
       var real = rows.filter(function (r) { return !isBlank(r.name); });
       if (!real.length) {
         el.innerHTML = '<p class="empty-note">Sponsors will be listed here. Interested in supporting ACISP 2027? ' +
-          'See <a href="sponsors.html">sponsorship opportunities</a>.</p>';
+          'See <a href="#sponsorship">sponsorship opportunities</a> below.</p>';
         return;
       }
       var order = [], tiers = {};

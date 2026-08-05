@@ -93,7 +93,6 @@ main { flex: 1 1 auto; min-width: 0; }
 main .container { max-width: none; width: auto; margin: 0; padding: 0; }
 main .section { padding: 0; margin: 0 0 1.6rem; }
 main .section:last-child { margin-bottom: 0; }
-main .section--soft { background: none; border: 0; }
 main .prose { max-width: var(--readw); }
 
 /* ---------- Sidebar ---------- */
@@ -105,7 +104,7 @@ main .prose { max-width: var(--readw); }
 .menu a[aria-current="page"] { background: var(--accent); color: #fff; font-weight: 600; }
 .menu a[aria-current="page"]:hover { color: #fff; padding-left: 15px; }
 .sidebar__partners { text-align: center; padding: 0 6px; }
-.sidebar__partners h4 { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin: 0 0 12px; font-weight: 700; }
+.sidebar__partners h4 { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; font-weight: 700; }
 .sidebar__partners a { display: block; margin: 0 auto 16px; }
 .sidebar__partners img { max-width: 155px; max-height: 66px; width: auto; margin: 0 auto; }
 .sidebar__partners .tba { margin-top: 4px; }
@@ -121,11 +120,24 @@ main .prose { max-width: var(--readw); }
 .site-banner__dot { width: 9px; height: 9px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .85); background: rgba(255, 255, 255, .3); padding: 0; cursor: pointer; }
 .site-banner__dot:hover { background: rgba(255, 255, 255, .65); }
 .site-banner__dot.is-active { background: #fff; }
+/* Pause/play control — WCAG 2.2.2 requires a way to stop the rotation. */
+.site-banner__pause { width: 18px; height: 18px; margin-left: 6px; padding: 0; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .85); background: rgba(0, 0, 0, .35); cursor: pointer; position: relative; }
+.site-banner__pause:hover { background: rgba(0, 0, 0, .55); }
+.site-banner__pause::before, .site-banner__pause::after { content: ""; position: absolute; top: 4px; width: 2px; height: 8px; background: #fff; }
+.site-banner__pause::before { left: 5px; }
+.site-banner__pause::after { right: 5px; }
+/* paused → show a single play triangle instead of the two bars */
+.site-banner.is-paused .site-banner__pause::before { left: 5px; top: 3px; width: 0; height: 0; background: none; border-left: 7px solid #fff; border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+.site-banner.is-paused .site-banner__pause::after { display: none; }
+@media (max-width: 520px) {
+  /* keep the credit clear of the dot controls in the bottom band */
+  .site-banner__credit { top: 8px; bottom: auto; }
+}
 @media (prefers-reduced-motion: reduce) { .site-banner__slide { transition: none; } }
 .site-banner__title { margin: 0; color: #fff; font-size: clamp(1.7rem, 3.6vw, 2.5rem); font-weight: 800; letter-spacing: .5px; line-height: 1.1; text-shadow: 0 1px 8px rgba(0, 0, 0, .45); }
 .site-banner__sub { margin: 3px 0 0; color: #e8f0fb; font-size: clamp(.92rem, 1.7vw, 1.12rem); font-weight: 500; text-shadow: 0 1px 6px rgba(0, 0, 0, .5); }
-.site-banner__credit { position: absolute; right: 12px; bottom: 7px; font-size: .66rem; color: rgba(255, 255, 255, .72); }
-.site-banner__credit a { color: rgba(255, 255, 255, .85); }
+.site-banner__credit { position: absolute; right: 12px; bottom: 7px; font-size: .66rem; color: rgba(255, 255, 255, .88); text-shadow: 0 1px 6px rgba(0, 0, 0, .75); }
+.site-banner__credit a { color: #fff; }
 
 /* ---------- Page heading (interior + home) ---------- */
 .pagehead { background: none; border: 0; }
@@ -133,7 +145,7 @@ main .prose { max-width: var(--readw); }
 .pagehead h1 { margin: .1rem 0 .3rem; }
 .pagehead p { color: var(--muted); max-width: var(--readw); margin: 0; }
 .breadcrumb { font-size: .82rem; color: var(--muted); margin: 0 0 .3rem; }
-.breadcrumb a { color: var(--muted); }
+.breadcrumb a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
 
 /* ---------- Prose / content ---------- */
 .section__head { max-width: var(--readw); margin-bottom: 1rem; }
@@ -167,7 +179,7 @@ main .prose { max-width: var(--readw); }
 .card h3 { margin-top: 0; }
 .grid { display: grid; gap: 18px; }
 .grid--2 { grid-template-columns: repeat(2, 1fr); }
-.grid--3 { grid-template-columns: repeat(2, 1fr); }
+.grid--3 { grid-template-columns: repeat(3, 1fr); }
 .linkcard { display: flex; flex-direction: column; gap: 5px; background: #fff; border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow-sm); transition: box-shadow .15s, transform .12s; }
 .linkcard:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); text-decoration: none; }
 .linkcard h3 { font-size: 1.02rem; margin: 0; }
@@ -188,11 +200,6 @@ table.data thead th { background: var(--table-head); color: var(--navy); font-si
 table.data tbody tr:nth-child(even) td { background: var(--bg-soft); }
 table.data tbody tr:last-child td { border-bottom: 0; }
 
-.dates td:last-child { white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--navy); font-weight: 600; }
-.dates .struck td:first-child { color: var(--muted); }
-.dates s { color: var(--muted); }
-.dates .row-highlight td { background: var(--accent-050) !important; }
-.dates .row-highlight td:last-child { color: var(--accent-600); }
 
 table.data tr.subhead td, table.data tr.subhead th { background: var(--navy); color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; font-size: .78rem; text-align: left; }
 
@@ -262,7 +269,7 @@ table.data tr.subhead td, table.data tr.subhead th { background: var(--navy); co
    296px tall (so retina-crisp up to a 148px display height). */
 .pub-logos img { max-height: 88px; max-width: 100%; width: auto; object-fit: contain; }
 
-/* Topics of interest — two columns, readable with long phrases */
+/* Topics of interest — deliberately one per line, as in the CFP document */
 .topic-list { list-style: none; margin: 0 0 1rem; padding: 0; }
 .topic-list li { position: relative; padding: 5px 0 5px 18px; font-size: .95rem; }
 .topic-list li::before { content: ""; position: absolute; left: 2px; top: 13px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
@@ -301,6 +308,9 @@ table.data tr.subhead td, table.data tr.subhead th { background: var(--navy); co
   .pc-list { columns: 1; }
   .speaker { grid-template-columns: 1fr; }
   .speaker__photo { width: 110px; height: 110px; }
+}
+@media (max-width: 980px) {
+  .grid--3 { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 620px) {
   .grid--2, .grid--3 { grid-template-columns: 1fr; }
