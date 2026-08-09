@@ -192,6 +192,15 @@ main .prose { max-width: var(--readw); }
 .facts .k { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0 0 3px; }
 .facts .v { font-size: 1rem; font-weight: 600; color: var(--navy); margin: 0; }
 
+/* Conference introduction video (home) */
+.conference-video { max-width: var(--readw); margin: 1.15rem 0 1.35rem; }
+.conference-video__player {
+  display: block; width: 100%; aspect-ratio: 16 / 9;
+  background: var(--navy-800); border: 1px solid var(--line-2);
+  border-radius: var(--radius); box-shadow: var(--shadow-sm);
+}
+.conference-video figcaption { margin-top: .45rem; color: var(--muted); font-size: .82rem; }
+
 /* ---------- Tables ---------- */
 .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); }
 table.data { width: 100%; border-collapse: collapse; font-size: .95rem; background: #fff; }
