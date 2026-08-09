@@ -199,8 +199,6 @@ main .prose { max-width: var(--readw); }
   background: var(--navy-800); border: 1px solid var(--line-2);
   border-radius: var(--radius); box-shadow: var(--shadow-sm);
 }
-.conference-video figcaption { margin-top: .45rem; color: var(--muted); font-size: .82rem; }
-
 /* ---------- Tables ---------- */
 .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); }
 table.data { width: 100%; border-collapse: collapse; font-size: .95rem; background: #fff; }
