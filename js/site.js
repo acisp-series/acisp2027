@@ -15,6 +15,7 @@
   var NAV = [
     ["index.html", "Home"],
     ["cfp.html", "Call for Papers"],
+    ["special-track.html", "Special Track"],
     ["committee.html", "Organising Committee"],
     ["pc.html", "Program Committee"],
     ["registration.html", "Registration"],
