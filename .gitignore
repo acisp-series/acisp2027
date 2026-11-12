@@ -4,6 +4,11 @@ acisp2026/
 # macOS noise
 .DS_Store
 
+# Source documents (content lives in the .html pages + data/)
 Call for papers 2027.docx
-# Source CFP documents (content lives in cfp.html + data/)
 cfp.md
+Special track.md
+Accepted ACISP 2027_PC.csv
+
+# Raw video exports (not used by the site)
+media/ACISP 2027 Promotional Video_1080p_caption.mp4

@@ -227,7 +227,8 @@ table.data tr.subhead td, table.data tr.subhead th { background: var(--navy); co
   .committee-role { color: var(--accent); font-size: .82rem; letter-spacing: .06em; text-transform: uppercase; }
 }
 .pc-list { columns: 2; column-gap: 36px; }
-.pc-list .person { break-inside: avoid; }
+/* Hanging indent so a wrapped affiliation reads as part of its entry. */
+.pc-list li { break-inside: avoid; padding-left: 1em; text-indent: -1em; }
 
 /* ---------- Speakers ---------- */
 .speaker { display: grid; grid-template-columns: 130px 1fr; gap: 22px; align-items: start; padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow-sm); margin-bottom: 20px; }

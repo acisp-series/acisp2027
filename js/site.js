@@ -463,10 +463,10 @@
         return;
       }
       var items = real.map(function (r) {
-        return '<div class="person"><span class="person__name">' + esc(r.name) + "</span>" +
-          (isBlank(r.affiliation) ? "" : ' <span class="person__aff">' + esc(r.affiliation) + "</span>") + "</div>";
+        return '<li><span class="person__name">' + esc(r.name) + "</span>" +
+          (isBlank(r.affiliation) ? "" : '<span class="person__aff">' + esc(r.affiliation) + "</span>") + "</li>";
       }).join("");
-      el.innerHTML = '<div class="pc-list">' + items + "</div>" +
+      el.innerHTML = '<ul class="committee-people pc-list">' + items + "</ul>" +
         '<p class="muted" style="margin-top:1rem">' + real.length + " members listed.</p>";
     }).catch(function () { fail(el, "pc.csv"); });
   };
