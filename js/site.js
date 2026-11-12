@@ -32,7 +32,9 @@
   /* Site-wide banner slideshow, shown under the title bar on every page.
      Add/remove/reorder slides here. Each slide needs src + alt + credit; the
      credit must match that image's author/licence (all current images are
-     CC BY-SA 4.0 from Wikimedia Commons — keep the visible credit). */
+     CC BY-SA 4.0 from Wikimedia Commons — keep the visible credit).
+     Every page <head> preloads the FIRST slide's image — update those
+     <link rel="preload"> tags if you change which slide comes first. */
   /* Auto-rotation interval, in milliseconds. */
   var SLIDE_MS = 5000;
 
@@ -466,8 +468,7 @@
         return '<li><span class="person__name">' + esc(r.name) + "</span>" +
           (isBlank(r.affiliation) ? "" : '<span class="person__aff">' + esc(r.affiliation) + "</span>") + "</li>";
       }).join("");
-      el.innerHTML = '<ul class="committee-people pc-list">' + items + "</ul>" +
-        '<p class="muted" style="margin-top:1rem">' + real.length + " members listed.</p>";
+      el.innerHTML = '<ul class="committee-people pc-list">' + items + "</ul>";
     }).catch(function () { fail(el, "pc.csv"); });
   };
 
